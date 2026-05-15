@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Góc Tâm Linh - Ngoại khóa American Study</title>
+    <style>
+        /* --- CÀI ĐẶT CHUNG --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #fcf6eb;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            background-image: repeating-linear-gradient(to bottom, transparent, transparent 40px, rgba(0,0,0,0.02) 40px, rgba(0,0,0,0.02) 80px);
+        }
+
+        /* --- HEADER / BANNER --- */
+        .banner {
+            width: 100%;
+            background-color: #fcecd4;
+            background-image: repeating-linear-gradient(45deg, #fae4c3 25%, transparent 25%, transparent 75%, #fae4c3 75%, #fae4c3), repeating-linear-gradient(45deg, #fae4c3 25%, #fcecd4 25%, #fcecd4 75%, #fae4c3 75%, #fae4c3);
+            background-position: 0 0, 10px 10px;
+            background-size: 20px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            border-bottom: 2px solid #e0c69d;
+        }
+
+        .banner-left h1 { color: #4a3622; font-size: 28px; margin-bottom: 5px; }
+        .banner-left p { color: #6b5035; font-size: 14px; font-weight: bold; }
+        .banner-right { text-align: right; color: #5c4022; }
+        .banner-right h3 { font-style: italic; margin-bottom: 5px; color: #8c5a2c; }
+
+        /* --- KHU VỰC BÀN THỜ (CSS ART) --- */
+        .shrine-container {
+            width: 450px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            margin-top: 30px;
+        }
+
+        /* Phần mái đình */
+        .roof-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .roof-top {
+            width: 380px;
+            height: 60px;
+            background-color: #d86c20;
+            position: relative;
+            border-radius: 50% 50% 10px 10px / 100% 100% 10px 10px;
+            box-shadow: inset 0 -10px 0 rgba(0,0,0,0.2);
+            background-image: radial-gradient(circle at 10px 0, transparent 10px, #a84f10 11px, #d86c20 12px);
+            background-size: 20px 20px;
+        }
+
+        .roof-top::before, .roof-top::after {
+            content: ''; position: absolute; bottom: 5px; width: 40px; height: 50px; background-color: #fcf6eb; border-radius: 50%;
+        }
+        .roof-top::before { left: -20px; box-shadow: 10px 10px 0 #d86c20; }
+        .roof-top::after { right: -20px; box-shadow: -10px 10px 0 #d86c20; }
+
+        .roof-beam {
+            width: 360px; height: 40px; background-color: #e09b63; border: 2px solid #a84f10;
+            border-top: none; display: flex; justify-content: center; align-items: center;
+            border-radius: 0 0 5px 5px; position: relative;
+        }
+
+        .passed-text {
+            color: #0b6623; font-size: 26px; font-weight: 900; letter-spacing: 2px;
+            text-shadow: 2px 2px 0px #fff; border-bottom: 2px dashed #0b6623;
+        }
+
+        /* Cột và Đèn lồng */
+        .pillars-section {
+            display: flex; justify-content: space-between; width: 340px; height: 180px;
+            position: relative; margin-top: -10px;
+        }
+
+        .pillar {
+            width: 16px; height: 100%; background: linear-gradient(to right, #ff5722, #e64a19, #ff5722);
+            border-left: 1px solid #bf360c; border-right: 1px solid #bf360c; z-index: 1;
+        }
+
+        .lantern {
+            position: absolute; top: 10px; width: 40px; height: 50px; background-color: #d84315;
+            border-radius: 20px; box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            background-image: repeating-linear-gradient(to bottom, transparent, transparent 8px, rgba(0,0,0,0.2) 8px, rgba(0,0,0,0.2) 10px);
+            z-index: 5;
+        }
+        .lantern.left { left: -28px; }
+        .lantern.right { right: -28px; }
+        .lantern::after {
+            content: '||||'; position: absolute; bottom: -15px; left: 10px;
+            color: #ffb300; font-size: 14px; letter-spacing: 1px; font-weight: bold;
+        }
+        .lantern::before {
+            content: ''; position: absolute; top: -15px; left: 18px; width: 4px; height: 15px; background-color: #333;
+        }
+
+        /* Khu vực Logo Center */
+        .center-logos {
+            position: absolute; top: 100px; display: flex; flex-direction: column;
+            align-items: center; width: 100%; z-index: 2;
+        }
+
+        .fpt-edu { display: flex; align-items: center; gap: 5px; font-size: 22px; margin-bottom: 5px; }
+        .fpt-logo-box {
+            background-color: #0b6623; padding: 2px 8px; border-radius: 4px; color: white;
+            font-style: italic; font-weight: 900; box-shadow: inset 0 -3px 0 rgba(0,0,0,0.2);
+            background: linear-gradient(to right, #e74c3c 50%, #2980b9 50%);
+        }
+        .edu-text { color: #2980b9; font-weight: bold; }
+        .uni-text {
+            color: #c0392b; font-size: 24px; font-weight: 900; letter-spacing: 1px;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.1); margin-top: 5px;
+        }
+
+        /* Đồ vật trên bàn thờ */
+        .altar-items {
+            display: flex; justify-content: space-between; align-items: flex-end;
+            width: 320px; height: 100px; position: relative; margin-top: -30px; z-index: 5;
+        }
+
+        .flower-pot-container { display: flex; flex-direction: column; align-items: center; }
+        .flowers {
+            width: 80px; height: 70px; background-color: #9cb288; border-radius: 50% 50% 40% 40%;
+            position: relative; border: 2px solid #5a6e46;
+        }
+        .flowers::before, .flowers::after { content: '🌸'; position: absolute; font-size: 20px; }
+        .flowers::before { top: 10px; left: 10px; }
+        .flowers::after { bottom: 15px; right: 15px; content: '🌺'; }
+        .pot {
+            width: 40px; height: 35px; background-color: #fff; border: 2px solid #5a6e46;
+            border-radius: 0 0 10px 10px; border-top: none; position: relative; margin-top: -10px;
+        }
+        .pot::after {
+            content: ''; position: absolute; bottom: -5px; left: -5px; width: 46px; height: 8px;
+            background-color: #fff; border: 2px solid #5a6e46; border-radius: 5px;
+        }
+
+        /* --- LƯ HƯƠNG (GỘP HIỆU ỨNG JS VÀO CSS ART) --- */
+        .burner {
+            width: 60px; position: relative; display: flex; flex-direction: column;
+            align-items: center; margin-bottom: 10px; z-index: 10;
+        }
+
+        /* Nhang và Khói (Chờ kích hoạt) */
+        .incense-sticks {
+            position: absolute; top: -35px; display: flex; gap: 4px; z-index: 1;
+        }
+        .stick { width: 3px; height: 40px; background-color: #8b4513; position: relative; }
+        .stick:nth-child(1) { transform: rotate(-10deg); }
+        .stick:nth-child(2) { transform: rotate(0deg); height: 45px; bottom: 5px; }
+        .stick:nth-child(3) { transform: rotate(10deg); }
+
+        .fire {
+            position: absolute; top: -2px; left: -1px; width: 5px; height: 5px;
+            background-color: #ff3300; border-radius: 50%; box-shadow: 0 0 8px 3px #ff6600;
+            opacity: 0; transition: opacity 1s;
+        }
+
+        .smoke-container {
+            position: absolute; top: -90px; width: 100%; height: 100px;
+            pointer-events: none; display: flex; justify-content: center; z-index: 2;
+        }
+        .smoke {
+            position: absolute; bottom: 0; width: 10px; height: 10px;
+            background: rgba(200, 200, 200, 0.6); border-radius: 50%; filter: blur(5px); opacity: 0;
+        }
+
+        /* Thân lư hương CSS Art */
+        .burner-top {
+            width: 30px; height: 15px; background: linear-gradient(to right, #b8860b, #ffd700, #b8860b);
+            clip-path: polygon(20% 0, 80% 0, 100% 100%, 0% 100%); z-index: 2;
+        }
+        .burner-body {
+            width: 50px; height: 40px; background: linear-gradient(to right, #a67c00, #ffcc00, #a67c00);
+            border-radius: 50% 50% 40% 40%; box-shadow: 0 5px 10px rgba(0,0,0,0.3); position: relative; z-index: 2;
+        }
+        .burner-body::before, .burner-body::after {
+            content: ''; position: absolute; top: 5px; width: 15px; height: 20px;
+            border: 3px solid #b8860b; border-radius: 50%;
+        }
+        .burner-body::before { left: -12px; }
+        .burner-body::after { right: -12px; }
+        .burner-legs { display: flex; gap: 15px; margin-top: -5px; z-index: 1; }
+        .leg { width: 8px; height: 15px; background-color: #a67c00; border-radius: 0 0 5px 5px; }
+
+        /* Animation khi thắp hương */
+        @keyframes smoke-rise {
+            0% { transform: translateY(0) scale(1) translateX(0); opacity: 0.8; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-80px) scale(4) translateX(15px); opacity: 0; }
+        }
+        @keyframes smoke-rise-alt {
+            0% { transform: translateY(0) scale(1) translateX(0); opacity: 0.8; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-90px) scale(3.5) translateX(-15px); opacity: 0; }
+        }
+        @keyframes flicker {
+            0% { box-shadow: 0 0 5px 2px #ff6600; }
+            100% { box-shadow: 0 0 10px 4px #ff3300; }
+        }
+
+        .burning .fire { opacity: 1; animation: flicker 0.5s infinite alternate; }
+        .burning .smoke:nth-child(1) { animation: smoke-rise 3s infinite linear; animation-delay: 0s; }
+        .burning .smoke:nth-child(2) { animation: smoke-rise-alt 2.5s infinite linear; animation-delay: 1s; }
+        .burning .smoke:nth-child(3) { animation: smoke-rise 3.2s infinite linear; animation-delay: 2s; }
+
+        /* Bệ gạch */
+        .brick-base {
+            width: 420px; background-color: #faebd7; border: 2px solid #8b4513; position: relative;
+            z-index: 4; display: flex; flex-direction: column; padding: 10px 0; box-shadow: inset 0 5px 0 #fff;
+        }
+        .brick-base::before {
+            content: ''; position: absolute; top: -15px; left: -10px; width: 436px; height: 15px;
+            background-color: #f5deb3; border: 2px solid #8b4513; transform: perspective(100px) rotateX(10deg);
+        }
+        .brick-row { display: flex; height: 30px; border-bottom: 2px solid #8b4513; }
+        .brick-row:last-child { border-bottom: none; }
+        .brick {
+            flex: 1; border-right: 2px solid #8b4513; display: flex; justify-content: center;
+            align-items: center; background-color: #ffefd5;
+        }
+        .brick.dark { background-color: #f4a460; }
+        .brick:last-child { border-right: none; }
+        
+        .alcove {
+            position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 50px;
+            background-color: #e6a86c; border: 4px solid #8b4513; border-bottom: none;
+            box-shadow: inset 0 10px 20px rgba(0,0,0,0.5);
+            border-image: repeating-linear-gradient(45deg, #8b4513, #8b4513 5px, #f4a460 5px, #f4a460 10px) 4;
+        }
+        .pass-stamp {
+            color: #0b6623; font-weight: 900; font-size: 16px; letter-spacing: 1px;
+            border: 2px dotted #0b6623; padding: 1px 6px; background-color: rgba(255, 255, 255, 0.7);
+            transform: rotate(-2deg);
+        }
+
+        /* --- FORM VÀ FOOTER --- */
+        .form-section { margin-top: 30px; display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 400px; }
+        textarea { width: 100%; height: 80px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; resize: none; font-size: 14px; outline: none; margin-bottom: 15px; color: #333; }
+        textarea:focus { border-color: #e67e22; }
+        button { background-color: #e67e22; color: white; border: none; padding: 10px 30px; font-size: 16px; font-weight: bold; border-radius: 4px; cursor: pointer; transition: background-color 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        button:hover { background-color: #d35400; }
+        button:disabled { background-color: #7f8c8d; cursor: not-allowed; }
+
+        .footer {
+            margin-top: auto; width: 100%; height: 35px;
+            background: linear-gradient(to right, #ff7e5f, #feb47b, #c288d4, #8e44ad);
+            color: white; text-align: center; font-size: 14px; line-height: 35px; font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="banner">
+        <div class="banner-left">
+            <h1>Ngoại khóa American Study</h1>
+            <p>Xây dựng | Đồng hành | Làm culi</p>
+        </div>
+        <div class="banner-right">
+            <h3>Thêm Thanh Tịnh Cho Sĩ Tử</h3>
+            <p>📍 9 Vũ Phạm Hàm</p>
+        </div>
+    </div>
+
+    <div class="shrine-container">
+        
+        <div class="roof-section">
+            <div class="roof-top"></div>
+            <div class="roof-beam">
+                <div class="passed-text">PASSED</div>
+            </div>
+        </div>
+
+        <div class="pillars-section">
+            <div class="lantern left"></div>
+            <div class="pillar"></div>
+            
+            <div class="center-logos">
+                <div class="fpt-edu">
+                    <img src= "https://americanstudy.edu.vn/wp-content/uploads/2020/05/Logo-American-Study-1.svg" width="200px">
+                </div>
+                </div>
+
+            <div class="pillar"></div>
+            <div class="lantern right"></div>
+        </div>
+
+        <div class="altar-items">
+            <div class="flower-pot-container">
+                <div class="flowers"></div>
+                <div class="pot"></div>
+            </div>
+
+            <div class="burner" id="burnerContainer">
+                <div class="smoke-container">
+                    <div class="smoke"></div>
+                    <div class="smoke"></div>
+                    <div class="smoke"></div>
+                </div>
+                <div class="incense-sticks">
+                    <div class="stick"><div class="fire"></div></div>
+                    <div class="stick"><div class="fire"></div></div>
+                    <div class="stick"><div class="fire"></div></div>
+                </div>
+                <div class="burner-top"></div>
+                <div class="burner-body"></div>
+                <div class="burner-legs">
+                    <div class="leg"></div>
+                    <div class="leg"></div>
+                </div>
+            </div>
+
+            <div class="flower-pot-container">
+                <div class="flowers"></div>
+                <div class="pot"></div>
+            </div>
+        </div>
+
+        <div class="brick-base">
+            <div class="brick-row">
+                <div class="brick"></div>
+                <div class="brick"><div class="pass-stamp">PASS</div></div>
+                <div class="brick"></div>
+                <div class="brick"></div>
+                <div class="brick"><div class="pass-stamp">PASS</div></div>
+                <div class="brick"></div>
+            </div>
+            <div class="brick-row">
+                <div class="brick dark"></div>
+                <div class="brick"></div>
+                <div class="brick"><div class="pass-stamp">PASS</div></div>
+                <div class="brick"></div>
+                <div class="brick dark"></div>
+            </div>
+            <div class="brick-row">
+                <div class="brick"><div class="pass-stamp">PASS</div></div>
+                <div class="brick"></div>
+                <div class="brick dark"></div>
+                <div class="brick"></div>
+                <div class="brick"><div class="pass-stamp">PASS</div></div>
+            </div>
+            <div class="brick-row">
+                <div class="brick dark"></div>
+                <div class="brick"></div>
+                <div class="brick"></div>
+                <div class="brick dark"></div>
+            </div>
+            
+            <div class="alcove"></div>
+        </div>
+
+    </div>
+
+    <div class="form-section">
+        <textarea id="wishInput" placeholder="Mong muốn của bạn..."></textarea>
+        <button id="prayBtn">THẮP HƯƠNG</button>
+        <div class="uni-text" style="margin-top: 20px;">ĐỖ DREAM SCHOOL</div>
+    </div>
+
+    <audio id="zenMusic" loop>
+        <source src="pray.mp3ype="audio/mpeg">
+        Trình duyệt của bạn không hỗ trợ thẻ audio.
+    </audio>
+
+    <div class="footer">
+        📌 cùng pray cho tất cả học sinh của chúng ta đỗ dreamschool nha !!!
+    </div>
+
+    <script>
+        const btn = document.getElementById('prayBtn');
+        const audio = document.getElementById('zenMusic');
+        const burner = document.getElementById('burnerContainer');
+        const wishInput = document.getElementById('wishInput');
+
+        btn.addEventListener('click', function() {
+            if (wishInput.value.trim() === '') {
+                alert('Vui lòng nhập mong muốn của bạn trước khi thắp hương nhé!');
+                return;
+            }
+
+            burner.classList.add('burning');
+
+            audio.play().catch(error => {
+                console.log("Trình duyệt yêu cầu tương tác để phát nhạc:", error);
+            });
+
+            btn.innerText = 'ĐANG CẦU NGUYỆN...';
+            btn.disabled = true;
+            wishInput.disabled = true;
+        });
+    </script>
+</body>
+</html>
